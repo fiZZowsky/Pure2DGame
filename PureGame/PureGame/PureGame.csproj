@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Engine\Content\player.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Engine\Content\player.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="OpenTK" Version="4.9.4" />
+    <PackageReference Include="OpenTK.Graphics" Version="4.9.4" />
+    <PackageReference Include="OpenTK.Windowing.Desktop" Version="4.9.4" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Engine\Audio\" />
+  </ItemGroup>
+
+</Project>
