@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Engine\Content\player.png">
+    <Content Include="Engine\Content\Textures\player.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -26,7 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Engine\Audio\" />
+    <Folder Include="Engine\Content\Audio\" />
+    <Folder Include="Engine\Content\Data\" />
+    <Folder Include="Engine\Content\Shaders\" />
   </ItemGroup>
 
 </Project>

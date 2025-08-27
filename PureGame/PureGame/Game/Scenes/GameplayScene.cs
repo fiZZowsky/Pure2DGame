@@ -1,13 +1,24 @@
-﻿using PureGame.Engine.Core;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
+using PureGame.Engine.Content;
+using PureGame.Engine.Core;
+using PureGame.Engine.Graphics;
 
 public class GameplayScene : Scene
 {
+    private Texture2D _playerTex;
+
     public override void OnEnter()
     {
+        _playerTex = ContentManager.LoadTexture("Textures/player.png");
         var player = CreateEntity("Player");
         player.Position = new Vector2(100, 100);
         player.AddComponent(new PlayerController());
+        //Engine.Audio.AudioManager.PreloadSfx("player_jump.wav");
+    }
+
+    public override void UnloadContent()
+    {
+        ContentManager.UnloadTexture("Textures/player.png");
     }
 }
 

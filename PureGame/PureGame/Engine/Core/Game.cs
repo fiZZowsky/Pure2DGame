@@ -24,12 +24,17 @@ public class Game : GameWindow
         GL.Enable(EnableCap.Blend);
         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
+        Engine.Audio.AudioManager.Initialize();
+        Engine.Content.ContentManager.Initialize();
+
         _camera = new Camera2D(Size.X, Size.Y);
         _spriteBatch = new SpriteBatch();
         
-        _texPlayer = new Texture2D("./Engine/Content/player.png");
+        //_texPlayer = new Texture2D("./Engine/Content/player.png");
 
         SceneManager.ChangeScene(new MainMenuScene());
+        //Engine.Audio.AudioManager.PreloadSfx("ui_click.wav");
+        //Engine.Audio.AudioManager.PlayMusic("bgm_menu.mp3", loop: true, volume: 0.6f);
     }
 
     protected override void OnResize(ResizeEventArgs e)
@@ -90,5 +95,6 @@ public class Game : GameWindow
         base.OnUnload();
         _texPlayer?.Dispose();
         _spriteBatch?.Dispose();
+        Engine.Audio.AudioManager.Dispose();
     }
 }
