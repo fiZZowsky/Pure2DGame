@@ -1,4 +1,5 @@
-﻿using PureGame.Engine.Graphics;
+﻿using PureGame.Engine.Content;
+using PureGame.Engine.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -24,13 +25,13 @@ public class Game : GameWindow
         GL.Enable(EnableCap.Blend);
         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
-        Engine.Audio.AudioManager.Initialize();
-        Engine.Content.ContentManager.Initialize();
+        Audio.AudioManager.Initialize();
+        ContentManager.Initialize();
 
         _camera = new Camera2D(Size.X, Size.Y);
         _spriteBatch = new SpriteBatch();
-        
-        //_texPlayer = new Texture2D("./Engine/Content/player.png");
+
+        _texPlayer = ContentManager.LoadTexture("Textures/player.png");
 
         SceneManager.ChangeScene(new MainMenuScene());
         //Engine.Audio.AudioManager.PreloadSfx("ui_click.wav");
@@ -93,7 +94,7 @@ public class Game : GameWindow
     protected override void OnUnload()
     {
         base.OnUnload();
-        _texPlayer?.Dispose();
+        ContentManager.UnloadTexture("Textures/player.png");
         _spriteBatch?.Dispose();
         Engine.Audio.AudioManager.Dispose();
     }
