@@ -13,7 +13,7 @@ namespace PureGame.Engine.Content
     {
         // Główny katalog z assetami
         public static string ContentRoot { get; private set; } =
-            Path.Combine(AppContext.BaseDirectory, "./Engine/Content");
+            Path.Combine(AppContext.BaseDirectory, "Engine\\Content");
 
         // Cache + refcount
         private class Entry<T> : IDisposable where T : class, IDisposable

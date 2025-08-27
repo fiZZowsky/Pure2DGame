@@ -6,14 +6,22 @@ using PureGame.Engine.Graphics;
 public class GameplayScene : Scene
 {
     private Texture2D _playerTex;
+    private Entity _player;
 
     public override void OnEnter()
     {
         _playerTex = ContentManager.LoadTexture("Textures/player.png");
-        var player = CreateEntity("Player");
-        player.Position = new Vector2(100, 100);
-        player.AddComponent(new PlayerController());
-        //Engine.Audio.AudioManager.PreloadSfx("player_jump.wav");
+        _player = CreateEntity("Player");
+        _player.Position = new Vector2(100, 100);
+        _player.AddComponent(new PlayerController());
+    }
+
+    public override void Draw()
+    {
+        var sb = Game.SpriteBatch;
+        sb.Begin(Game.Camera);
+        sb.Draw(_playerTex, _player.Position, new Vector2(_playerTex.Width, _playerTex.Height));
+        sb.End();
     }
 
     public override void UnloadContent()
@@ -26,7 +34,6 @@ internal class PlayerController : Component
 {
     public override void Update(double dt)
     {
-        // Prosty ruch – przykład (WSAD):
         var speed = 200f;
         var m = OpenTK.Mathematics.Vector2.Zero;
 

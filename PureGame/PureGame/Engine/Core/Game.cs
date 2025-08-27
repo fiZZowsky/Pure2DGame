@@ -13,9 +13,15 @@ public class Game : GameWindow
     private const double FixedDelta = 1.0 / 60.0; // 60 FPS update
     private Camera2D _camera;
     private SpriteBatch _spriteBatch;
-    private Texture2D _texPlayer;
 
-    public Game(GameWindowSettings gws, NativeWindowSettings nws) : base(gws, nws) { }
+    public static Game Instance { get; private set; } = null!;
+    public static Camera2D Camera => Instance._camera;
+    public static SpriteBatch SpriteBatch => Instance._spriteBatch;
+
+    public Game(GameWindowSettings gws, NativeWindowSettings nws) : base(gws, nws)
+    {
+        Instance = this;
+    }
 
     protected override void OnLoad()
     {
@@ -30,9 +36,7 @@ public class Game : GameWindow
 
         _camera = new Camera2D(Size.X, Size.Y);
         _spriteBatch = new SpriteBatch();
-
-        _texPlayer = ContentManager.LoadTexture("Textures/player.png");
-
+        
         SceneManager.ChangeScene(new MainMenuScene());
         //Engine.Audio.AudioManager.PreloadSfx("ui_click.wav");
         //Engine.Audio.AudioManager.PlayMusic("bgm_menu.mp3", loop: true, volume: 0.6f);
@@ -61,9 +65,7 @@ public class Game : GameWindow
             // TODO: SceneManager.FixedUpdate(FixedDelta);
             _accumulator -= FixedDelta;
         }
-
-        // TODO: SceneManager.Update(args.Time);
-
+        
         if (IsExiting) return;
 
         SceneManager.Update(args.Time);
@@ -74,19 +76,7 @@ public class Game : GameWindow
         base.OnRenderFrame(args);
 
         GL.Clear(ClearBufferMask.ColorBufferBit);
-
-        _spriteBatch.Begin(_camera);
-        _spriteBatch.Draw(
-            _texPlayer,
-            position: new Vector2(200, 150),
-            size: new Vector2(128, 128),
-            rotationRad: 0f,
-            color: new Vector4(1f, 1f, 1f, 1f)
-        );
-        _spriteBatch.End();
-
-        SwapBuffers();
-
+        
         SceneManager.Draw();
         SwapBuffers();
     }
