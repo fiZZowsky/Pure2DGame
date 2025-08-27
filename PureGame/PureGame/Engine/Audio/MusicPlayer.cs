@@ -37,7 +37,7 @@ namespace PureGame.Engine.Audio
             WaveStream src = _reader;
             if (Loop) src = _loopStream = new LoopStream(_reader) { EnableLooping = true };
 
-            _pipeline = new SampleChannel(src, false).ToSampleProvider(); // konwersja do float ISampleProvider
+            _pipeline = new SampleChannel(src, false);
             _pipeline = new VolumeSampleProvider(_pipeline) { Volume = _volume };
 
             _output = new WaveOutEvent();

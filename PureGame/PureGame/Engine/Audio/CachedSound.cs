@@ -21,12 +21,14 @@ namespace PureGame.Engine.Audio
                 ResamplerQuality = 60
             };
 
+            var sampleProvider = resampled.ToSampleProvider();
+
             var wholeFile = new System.Collections.Generic.List<float>();
-            var readBuffer = new float[resampled.WaveFormat.SampleRate * resampled.WaveFormat.Channels];
+            var readBuffer = new float[sampleProvider.WaveFormat.SampleRate * sampleProvider.WaveFormat.Channels];
             int samplesRead;
             do
             {
-                samplesRead = resampled.Read(readBuffer, 0, readBuffer.Length);
+                samplesRead = sampleProvider.Read(readBuffer, 0, readBuffer.Length);
                 if (samplesRead > 0)
                 {
                     for (int n = 0; n < samplesRead; n++)
@@ -35,7 +37,7 @@ namespace PureGame.Engine.Audio
             } while (samplesRead > 0);
 
             AudioData = wholeFile.ToArray();
-            WaveFormat = resampled.WaveFormat;
+            WaveFormat = sampleProvider.WaveFormat;
         }
 
         public void Dispose()
