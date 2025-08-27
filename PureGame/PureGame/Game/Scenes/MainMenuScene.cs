@@ -8,8 +8,7 @@ using PureGame.Engine.Input;
 public class MainMenuScene : Scene
 {
     private Texture2D[] _options = null!;
-    private Texture2D _whiteTex = null!;
-    private readonly Vector2 _optionSize = new Vector2(300, 80);
+    private readonly Vector2 _optionSize = new Vector2(300, 100);
     private int _selected;
 
     public override void LoadContent()
@@ -20,7 +19,6 @@ public class MainMenuScene : Scene
             ContentManager.LoadTexture("Textures/settings.png"),
             ContentManager.LoadTexture("Textures/exit.png")
         };
-        _whiteTex = ContentManager.LoadTexture("Textures/white.png");
     }
 
     public override void UnloadContent()
@@ -28,7 +26,6 @@ public class MainMenuScene : Scene
         ContentManager.UnloadTexture("Textures/new_game.png");
         ContentManager.UnloadTexture("Textures/settings.png");
         ContentManager.UnloadTexture("Textures/exit.png");
-        ContentManager.UnloadTexture("Textures/white.png");
     }
 
     public override void Update(double dt)
@@ -39,7 +36,6 @@ public class MainMenuScene : Scene
             _selected = (_selected + 1) % _options.Length;
 
         var mouse = InputManager.MousePosition;
-        mouse.Y = Game.Camera.Height - mouse.Y; // convert to top-left origin
 
         for (int i = 0; i < _options.Length; i++)
         {
@@ -84,10 +80,10 @@ public class MainMenuScene : Scene
         sb.Begin(Game.Camera);
         for (int i = 0; i < _options.Length; i++)
         {
-            var pos = OptionPosition(i);
-            if (i == _selected)
-                sb.Draw(_whiteTex, pos, _optionSize, 0f, new Vector4(0.5f, 0.5f, 0.5f, 1f));
-            sb.Draw(_options[i], pos, _optionSize);
+            float scale = i == _selected ? 1.1f : 1f;
+            Vector2 size = _optionSize * scale;
+            var pos = OptionPosition(i) - (size - _optionSize) * 0.5f;
+            sb.Draw(_options[i], pos, size);
         }
         sb.End();
     }

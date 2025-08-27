@@ -11,15 +11,12 @@
     <None Remove="Engine\Content\player.png" />
     <None Remove="Engine\Content\Textures\exit.png" />
     <None Remove="Engine\Content\Textures\new_game.png" />
+    <None Remove="Engine\Content\Textures\player.png" />
     <None Remove="Engine\Content\Textures\settings.png" />
-    <None Remove="Engine\Content\Textures\white.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Engine\Content\Textures\exit.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Engine\Content\Textures\new_game.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\Content\Textures\player.png">
@@ -28,7 +25,7 @@
     <Content Include="Engine\Content\Textures\settings.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Engine\Content\Textures\white.png">
+    <Content Include="Engine\Content\Textures\new_game.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
