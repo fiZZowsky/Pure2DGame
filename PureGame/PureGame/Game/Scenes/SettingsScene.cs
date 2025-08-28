@@ -10,6 +10,7 @@ using PureGame.Engine.Save;
 
 public class SettingsScene : Scene
 {
+    private Texture2D _background = null!;
     private Texture2D _backTex = null!;
     private Texture2D _saveTex = null!;
     private Texture2D _whiteTex = null!;
@@ -30,6 +31,7 @@ public class SettingsScene : Scene
 
     public override void LoadContent()
     {
+        _background = ContentManager.LoadTexture("Textures/main_menu_background.png");
         _backTex = ContentManager.LoadTexture("Textures/back.png");
         _saveTex = ContentManager.LoadTexture("Textures/save.png");
         _whiteTex = ContentManager.LoadTexture("Textures/white.png");
@@ -108,6 +110,8 @@ public class SettingsScene : Scene
     {
         var sb = Game.SpriteBatch;
         sb.Begin(Game.Camera);
+
+        sb.Draw(_background, Vector2.Zero, new Vector2(Game.Camera.Width, Game.Camera.Height));
 
         // back button
         _backButton.Draw(sb);
