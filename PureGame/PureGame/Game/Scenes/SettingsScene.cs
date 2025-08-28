@@ -1,5 +1,4 @@
-﻿using System;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Windowing.Common;
 using PureGame.Engine.Content;
@@ -14,7 +13,6 @@ public class SettingsScene : Scene
     private Texture2D _backTex = null!;
     private Texture2D _saveTex = null!;
     private Texture2D _whiteTex = null!;
-    private Texture2D[] _resolutionTex = null!;
     private LabeledCheckbox _fullscreenCheck = null!;
     private Button _backButton = null!;
     private Button _saveButton = null!;
@@ -36,13 +34,6 @@ public class SettingsScene : Scene
         _saveTex = ContentManager.LoadTexture("Textures/save.png");
         _whiteTex = ContentManager.LoadTexture("Textures/white.png");
 
-        _resolutionTex = new Texture2D[_resolutions.Length];
-        for (int i = 0; i < _resolutions.Length; i++)
-        {
-            var r = _resolutions[i];
-            _resolutionTex[i] = ContentManager.LoadTexture($"Textures/res/{r.X}x{r.Y}.png");
-        }
-
         _fullscreenCheck = new LabeledCheckbox(_whiteTex, new Vector2(100, 100), "Fullscreen", Game.Instance.WindowState == WindowState.Fullscreen);
         _backButton = new Button(_backTex, new Vector2(10, 10), new Vector2(64, 32));
         _saveButton = new Button(_saveTex, new Vector2(Game.Camera.Width - 74, Game.Camera.Height - 42), new Vector2(64, 32));
@@ -54,12 +45,11 @@ public class SettingsScene : Scene
 
     public override void UnloadContent()
     {
+        ContentManager.UnloadTexture("Textures/main_menu_background.png");
         ContentManager.UnloadTexture("Textures/back.png");
         ContentManager.UnloadTexture("Textures/save.png");
         ContentManager.UnloadTexture("Textures/white.png");
         _fullscreenCheck.Dispose();
-        for (int i = 0; i < _resolutions.Length; i++)
-            ContentManager.UnloadTexture($"Textures/res/{_resolutions[i].X}x{_resolutions[i].Y}.png");
     }
 
     public override void Update(double dt)
@@ -123,9 +113,6 @@ public class SettingsScene : Scene
         _backButton.Draw(sb);
 
         _fullscreenCheck.Draw(sb);
-
-        // resolution option
-        sb.Draw(_resolutionTex[_selectedRes], new Vector2(100, 160), new Vector2(120, 32));
 
         // save button if pending
         if (_pending)
