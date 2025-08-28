@@ -8,12 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Engine\Content\Fonts\Pixellari.ttf" />
     <None Remove="Engine\Content\player.png" />
     <None Remove="Engine\Content\Textures\back.png" />
     <None Remove="Engine\Content\Textures\exit.png" />
     <None Remove="Engine\Content\Textures\load_game.png" />
     <None Remove="Engine\Content\Textures\main_menu_background.png" />
     <None Remove="Engine\Content\Textures\new_game.png" />
+    <None Remove="Engine\Content\Textures\panel.png" />
     <None Remove="Engine\Content\Textures\player.png" />
     <None Remove="Engine\Content\Textures\save.png" />
     <None Remove="Engine\Content\Textures\settings.png" />
@@ -21,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Engine\Content\Fonts\Pixellari.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Engine\Content\Textures\back.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -46,6 +51,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\Content\Textures\white.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engine\Content\Textures\panel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
