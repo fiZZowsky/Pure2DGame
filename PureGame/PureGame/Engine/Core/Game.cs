@@ -47,6 +47,7 @@ public class Game : GameWindow
         base.OnResize(e);
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
         _camera.Resize(ClientSize.X, ClientSize.Y);
+        SceneManager.Resize(ClientSize.X, ClientSize.Y);
     }
 
     protected override void OnUpdateFrame(FrameEventArgs args)

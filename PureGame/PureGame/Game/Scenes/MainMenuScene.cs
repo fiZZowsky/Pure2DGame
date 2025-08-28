@@ -77,6 +77,14 @@ public class MainMenuScene : Scene
         return new Vector2(Game.Camera.Width - margin - _optionSize.X, y);
     }
 
+    public override void OnResize(int width, int height)
+    {
+        for (int i = 0; i < _options.Length; i++)
+        {
+            _options[i].Position = OptionPosition(i);
+        }
+    }
+
     public override void Draw()
     {
         var sb = Game.SpriteBatch;

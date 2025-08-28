@@ -90,6 +90,11 @@ public class SettingsScene : Scene
         }
     }
 
+    public override void OnResize(int width, int height)
+    {
+        _saveButton.Position = new Vector2(Game.Camera.Width - 74, Game.Camera.Height - 42);
+    }
+    
     private bool IsClicked(Vector2 mouse, Vector2 pos, Vector2 size)
     {
         return mouse.X >= pos.X && mouse.X <= pos.X + size.X &&

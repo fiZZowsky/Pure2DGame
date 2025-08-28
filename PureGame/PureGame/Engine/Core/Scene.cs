@@ -44,6 +44,7 @@ namespace PureGame.Engine.Core
 
         public virtual void OnEnter() { }
         public virtual void OnExit() { }
+        public virtual void OnResize(int width, int height) { }
 
         internal void _Update(double dt)
         {

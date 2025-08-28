@@ -31,5 +31,10 @@ namespace PureGame.Engine.Core
         {
             Current?._Draw();
         }
+
+        internal static void Resize(int width, int height)
+        {
+            Current?.OnResize(width, height);
+        }
     }
 }
