@@ -16,9 +16,7 @@ namespace PureGame.Engine.Input
         private static Vector2 _mousePosition;
         
         private static bool _hasPrevFrame = false;
-
-        private const float TitleBarHeight = 36f;
-
+        
         public static void Update(KeyboardState keyboard, MouseState mouse)
         {
             if (_hasPrevFrame)
@@ -31,7 +29,6 @@ namespace PureGame.Engine.Input
             _mouseCurrent = mouse;
 
             var pos = mouse.Position;
-            pos.Y += TitleBarHeight;
             _mousePosition = pos;
 
             _hasPrevFrame = true;

@@ -71,10 +71,10 @@ public class MainMenuScene : Scene
 
     private Vector2 OptionPosition(int index)
     {
-        float margin = 50f;
+        float margin = 100f;
         float startY = 200f;
         float y = startY + index * (_optionSize.Y + 20f);
-        return new Vector2(margin, y);
+        return new Vector2(Game.Camera.Width - margin - _optionSize.X, y);
     }
 
     public override void Draw()

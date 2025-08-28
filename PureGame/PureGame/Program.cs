@@ -13,7 +13,7 @@ internal static class Program
         var gw = GameWindowSettings.Default;
         var nw = new NativeWindowSettings
         {
-            Size = settings.Resolution,
+            ClientSize = settings.Resolution,
             Title = "Pure Game",
             StartVisible = true,
             StartFocused = true

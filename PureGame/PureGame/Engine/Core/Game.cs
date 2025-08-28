@@ -34,7 +34,7 @@ public class Game : GameWindow
         Audio.AudioManager.Initialize();
         ContentManager.Initialize();
 
-        _camera = new Camera2D(Size.X, Size.Y);
+        _camera = new Camera2D(ClientSize.X, ClientSize.Y);
         _spriteBatch = new SpriteBatch();
         
         SceneManager.ChangeScene(new MainMenuScene());
@@ -45,8 +45,8 @@ public class Game : GameWindow
     protected override void OnResize(ResizeEventArgs e)
     {
         base.OnResize(e);
-        GL.Viewport(0, 0, Size.X, Size.Y);
-        _camera.Resize(Size.X, Size.Y);
+        GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
+        _camera.Resize(ClientSize.X, ClientSize.Y);
     }
 
     protected override void OnUpdateFrame(FrameEventArgs args)
