@@ -60,18 +60,22 @@ public class MainMenuScene : Scene
             case 0:
                 SceneManager.ChangeScene(new GameplayScene());
                 break;
+            case 1:
+                SceneManager.ChangeScene(new SettingsScene());
+                break;
             case 2:
                 Game.Instance.Close();
+                System.Environment.Exit(0);
                 break;
         }
     }
 
     private Vector2 OptionPosition(int index)
     {
-        float x = (Game.Camera.Width - _optionSize.X) / 2f;
+        float margin = 50f;
         float startY = 200f;
         float y = startY + index * (_optionSize.Y + 20f);
-        return new Vector2(x, y);
+        return new Vector2(margin, y);
     }
 
     public override void Draw()
