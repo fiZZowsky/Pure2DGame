@@ -1,5 +1,4 @@
 ﻿using OpenTK.Mathematics;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using PureGame.Engine.Content;
 using PureGame.Engine.Core;
 using PureGame.Engine.Graphics;
@@ -11,7 +10,6 @@ public class MainMenuScene : Scene
     private Texture2D _background = null!;
     private Button[] _options = null!;
     private readonly Vector2 _optionSize = new Vector2(300, 70);
-    private int _selected = -1;
 
     public override void LoadContent()
     {
