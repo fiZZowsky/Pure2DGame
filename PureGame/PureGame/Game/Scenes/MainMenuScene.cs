@@ -4,25 +4,37 @@ using PureGame.Engine.Content;
 using PureGame.Engine.Core;
 using PureGame.Engine.Graphics;
 using PureGame.Engine.Input;
+using PureGame.Engine.UI;
 
 public class MainMenuScene : Scene
 {
-    private Texture2D[] _options = null!;
+    private Texture2D _background = null!;
+    private Button[] _options = null!;
     private readonly Vector2 _optionSize = new Vector2(300, 70);
     private int _selected = -1;
 
     public override void LoadContent()
     {
-        _options = new[]
+        _background = ContentManager.LoadTexture("Textures/main_menu_background.png");
+
+        var textures = new[]
         {
             ContentManager.LoadTexture("Textures/new_game.png"),
             ContentManager.LoadTexture("Textures/settings.png"),
             ContentManager.LoadTexture("Textures/exit.png")
         };
+
+        _options = new Button[textures.Length];
+        for (int i = 0; i < textures.Length; i++)
+        {
+            var pos = OptionPosition(i);
+            _options[i] = new Button(textures[i], pos, _optionSize);
+        }
     }
 
     public override void UnloadContent()
     {
+        ContentManager.UnloadTexture("Textures/main_menu_background.png");
         ContentManager.UnloadTexture("Textures/new_game.png");
         ContentManager.UnloadTexture("Textures/settings.png");
         ContentManager.UnloadTexture("Textures/exit.png");
@@ -30,21 +42,13 @@ public class MainMenuScene : Scene
 
     public override void Update(double dt)
     {
-        _selected = -1;
         var mouse = InputManager.MousePosition;
 
         for (int i = 0; i < _options.Length; i++)
         {
-            var pos = OptionPosition(i);
-            var center = pos + _optionSize * 0.5f;
-            var half = _optionSize * 0.25f;
-            bool inside = mouse.X >= center.X - half.X && mouse.X <= center.X + half.X &&
-                          mouse.Y >= center.Y - half.Y && mouse.Y <= center.Y + half.Y;
-            if (inside)
+            if (_options[i].Update(mouse))
             {
-                _selected = i;
-                if (InputManager.IsMouseButtonPressed(MouseButton.Left))
-                    ActivateOption(i);
+                ActivateOption(i);
                 break;
             }
         }
@@ -79,12 +83,10 @@ public class MainMenuScene : Scene
     {
         var sb = Game.SpriteBatch;
         sb.Begin(Game.Camera);
+        sb.Draw(_background, Vector2.Zero, new Vector2(Game.Camera.Width, Game.Camera.Height));
         for (int i = 0; i < _options.Length; i++)
         {
-            float scale = i == _selected ? 1.1f : 1f;
-            Vector2 size = _optionSize * scale;
-            var pos = OptionPosition(i) - (size - _optionSize) * 0.5f;
-            sb.Draw(_options[i], pos, size);
+            _options[i].Draw(sb);
         }
         sb.End();
     }

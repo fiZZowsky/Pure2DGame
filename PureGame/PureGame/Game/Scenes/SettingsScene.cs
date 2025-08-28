@@ -7,6 +7,7 @@ using PureGame.Engine.Core;
 using PureGame.Engine.Graphics;
 using PureGame.Engine.Input;
 using PureGame.Engine.UI;
+using PureGame.Engine.Save;
 
 public class SettingsScene : Scene
 {
@@ -15,6 +16,8 @@ public class SettingsScene : Scene
     private Texture2D _whiteTex = null!;
     private Texture2D[] _resolutionTex = null!;
     private LabeledCheckbox _fullscreenCheck = null!;
+    private Button _backButton = null!;
+    private Button _saveButton = null!;
 
     private readonly Vector2i[] _resolutions =
     {
@@ -41,6 +44,8 @@ public class SettingsScene : Scene
         }
 
         _fullscreenCheck = new LabeledCheckbox(_whiteTex, new Vector2(100, 100), "Fullscreen", Game.Instance.WindowState == WindowState.Fullscreen);
+        _backButton = new Button(_backTex, new Vector2(10, 10), new Vector2(64, 32));
+        _saveButton = new Button(_saveTex, new Vector2(Game.Camera.Width - 74, Game.Camera.Height - 42), new Vector2(64, 32));
         var size = Game.Instance.Size;
         _selectedRes = Array.FindIndex(_resolutions, r => r == size);
         if (_selectedRes < 0) _selectedRes = 0;
@@ -62,8 +67,7 @@ public class SettingsScene : Scene
         var mouse = InputManager.MousePosition;
 
         // back button
-        if (InputManager.IsMouseButtonPressed(MouseButton.Left) &&
-            mouse.X >= 10 && mouse.X <= 74 && mouse.Y >= 10 && mouse.Y <= 42)
+        if (_backButton.Update(mouse))
         {
             SceneManager.ChangeScene(new MainMenuScene());
             return;
@@ -85,8 +89,8 @@ public class SettingsScene : Scene
         // save button
         if (_pending)
         {
-            var savePos = new Vector2(Game.Camera.Width - 74, Game.Camera.Height - 42);
-            if (IsClicked(mouse, savePos, new Vector2(64, 32)))
+            _saveButton.Position = new Vector2(Game.Camera.Width - 74, Game.Camera.Height - 42);
+            if (_saveButton.Update(mouse))
             {
                 ApplySettings();
                 _pending = false;
@@ -107,6 +111,7 @@ public class SettingsScene : Scene
         var res = _resolutions[_selectedRes];
         Game.Instance.Size = res;
         Game.Camera.Resize(res.X, res.Y);
+        SettingsManager.Save(new SettingsData(res.X, res.Y, _fullscreenCheck.Checked));
     }
 
     public override void Draw()
@@ -115,7 +120,7 @@ public class SettingsScene : Scene
         sb.Begin(Game.Camera);
 
         // back button
-        sb.Draw(_backTex, new Vector2(10, 10), new Vector2(64, 32));
+        _backButton.Draw(sb);
 
         _fullscreenCheck.Draw(sb);
 
@@ -124,7 +129,9 @@ public class SettingsScene : Scene
 
         // save button if pending
         if (_pending)
-            sb.Draw(_saveTex, new Vector2(Game.Camera.Width - 74, Game.Camera.Height - 42), new Vector2(64, 32));
+        {
+            _saveButton.Draw(sb);
+        }
 
         sb.End();
     }
