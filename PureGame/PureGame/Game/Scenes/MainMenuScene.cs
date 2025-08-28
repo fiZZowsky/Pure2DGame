@@ -9,7 +9,7 @@ public class MainMenuScene : Scene
 {
     private Texture2D[] _options = null!;
     private readonly Vector2 _optionSize = new Vector2(300, 70);
-    private int _selected;
+    private int _selected = -1;
 
     public override void LoadContent()
     {
@@ -30,27 +30,24 @@ public class MainMenuScene : Scene
 
     public override void Update(double dt)
     {
-        if (InputManager.IsKeyPressed(Keys.Up))
-            _selected = (_selected + _options.Length - 1) % _options.Length;
-        if (InputManager.IsKeyPressed(Keys.Down))
-            _selected = (_selected + 1) % _options.Length;
-
+        _selected = -1;
         var mouse = InputManager.MousePosition;
 
         for (int i = 0; i < _options.Length; i++)
         {
             var pos = OptionPosition(i);
-            if (mouse.X >= pos.X && mouse.X <= pos.X + _optionSize.X &&
-                mouse.Y >= pos.Y && mouse.Y <= pos.Y + _optionSize.Y)
+            var center = pos + _optionSize * 0.5f;
+            var half = _optionSize * 0.25f;
+            bool inside = mouse.X >= center.X - half.X && mouse.X <= center.X + half.X &&
+                          mouse.Y >= center.Y - half.Y && mouse.Y <= center.Y + half.Y;
+            if (inside)
             {
                 _selected = i;
                 if (InputManager.IsMouseButtonPressed(MouseButton.Left))
                     ActivateOption(i);
+                break;
             }
         }
-
-        if (InputManager.IsKeyPressed(Keys.Enter))
-            ActivateOption(_selected);
     }
 
     private void ActivateOption(int index)
