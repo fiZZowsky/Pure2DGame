@@ -1,6 +1,5 @@
 ﻿using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Mathematics;
-using PureGame.Engine.Core;
 using Keys = OpenTK.Windowing.GraphicsLibraryFramework.Keys;
 using MouseButton = OpenTK.Windowing.GraphicsLibraryFramework.MouseButton;
 
@@ -15,30 +14,25 @@ namespace PureGame.Engine.Input
         private static MouseState _mousePrevious;
 
         private static Vector2 _mousePosition;
-        private static Vector2 _mousePrevPosition;
-
-        private static Vector2 _mouseDelta;
-        private static bool _hasPrevFrame = false;
         
+        private static bool _hasPrevFrame = false;
+
+        private const float TitleBarHeight = 36f;
+
         public static void Update(KeyboardState keyboard, MouseState mouse)
         {
             if (_hasPrevFrame)
             {
                 _keyboardPrevious = _keyboardCurrent;
                 _mousePrevious = _mouseCurrent;
-                _mousePrevPosition = _mousePosition;
             }
 
             _keyboardCurrent = keyboard;
             _mouseCurrent = mouse;
 
             var pos = mouse.Position;
-            pos.Y = Game.Camera.Height - pos.Y;
+            pos.Y += TitleBarHeight;
             _mousePosition = pos;
-
-            _mouseDelta = _hasPrevFrame
-                ? _mousePosition - _mousePrevPosition
-                : Vector2.Zero;
 
             _hasPrevFrame = true;
         }
@@ -63,8 +57,7 @@ namespace PureGame.Engine.Input
         public static bool IsMouseButtonReleased(MouseButton button) =>
             _hasPrevFrame && !_mouseCurrent.IsButtonDown(button) && _mousePrevious.IsButtonDown(button);
         
-        public static Vector2 MousePosition => _mouseCurrent.Position;
-        public static Vector2 MouseDelta => _mouseDelta;
+        public static Vector2 MousePosition => _mousePosition;
         
         public static float ScrollDelta => _mouseCurrent.ScrollDelta.Y;
         
@@ -75,8 +68,6 @@ namespace PureGame.Engine.Input
             _mouseCurrent = default;
             _mousePrevious = default;
             _mousePosition = Vector2.Zero;
-            _mousePrevPosition = Vector2.Zero;
-            _mouseDelta = Vector2.Zero;
             _hasPrevFrame = false;
         }
     }
