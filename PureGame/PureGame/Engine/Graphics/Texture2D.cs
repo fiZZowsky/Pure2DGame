@@ -10,14 +10,24 @@ namespace PureGame.Engine.Graphics
     public sealed class Texture2D : IDisposable
     {
         public int Handle { get; private set; }
-        public int Width { get; }
-        public int Height { get; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
 
         public Texture2D(string path)
         {
             if (!File.Exists(path)) throw new FileNotFoundException(path);
 
             using var img = Image.Load<Rgba32>(path);
+            InitializeFromImage(img);
+        }
+
+        public Texture2D(Image<Rgba32> img)
+        {
+            InitializeFromImage(img);
+        }
+
+        private void InitializeFromImage(Image<Rgba32> img)
+        {
             Width = img.Width;
             Height = img.Height;
 
@@ -28,8 +38,7 @@ namespace PureGame.Engine.Graphics
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
-
-            // skopiuj piksele do zarządzanego bufora
+            
             var pixels = new byte[img.Width * img.Height * 4];
             img.CopyPixelDataTo(pixels);
 

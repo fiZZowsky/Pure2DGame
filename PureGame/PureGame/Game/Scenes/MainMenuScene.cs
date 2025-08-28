@@ -8,7 +8,7 @@ using PureGame.Engine.Input;
 public class MainMenuScene : Scene
 {
     private Texture2D[] _options = null!;
-    private readonly Vector2 _optionSize = new Vector2(300, 100);
+    private readonly Vector2 _optionSize = new Vector2(300, 70);
     private int _selected;
 
     public override void LoadContent()

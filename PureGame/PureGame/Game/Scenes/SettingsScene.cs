@@ -6,14 +6,15 @@ using PureGame.Engine.Content;
 using PureGame.Engine.Core;
 using PureGame.Engine.Graphics;
 using PureGame.Engine.Input;
+using PureGame.Engine.UI;
 
 public class SettingsScene : Scene
 {
     private Texture2D _backTex = null!;
     private Texture2D _saveTex = null!;
-    private Texture2D _fullscreenOnTex = null!;
-    private Texture2D _fullscreenOffTex = null!;
+    private Texture2D _whiteTex = null!;
     private Texture2D[] _resolutionTex = null!;
+    private LabeledCheckbox _fullscreenCheck = null!;
 
     private readonly Vector2i[] _resolutions =
     {
@@ -24,15 +25,13 @@ public class SettingsScene : Scene
     };
 
     private int _selectedRes;
-    private bool _fullscreen;
     private bool _pending;
 
     public override void LoadContent()
     {
         _backTex = ContentManager.LoadTexture("Textures/back.png");
         _saveTex = ContentManager.LoadTexture("Textures/save.png");
-        _fullscreenOnTex = ContentManager.LoadTexture("Textures/fullscreen_on.png");
-        _fullscreenOffTex = ContentManager.LoadTexture("Textures/fullscreen_off.png");
+        _whiteTex = ContentManager.LoadTexture("Textures/white.png");
 
         _resolutionTex = new Texture2D[_resolutions.Length];
         for (int i = 0; i < _resolutions.Length; i++)
@@ -41,7 +40,7 @@ public class SettingsScene : Scene
             _resolutionTex[i] = ContentManager.LoadTexture($"Textures/res/{r.X}x{r.Y}.png");
         }
 
-        _fullscreen = Game.Instance.WindowState == WindowState.Fullscreen;
+        _fullscreenCheck = new LabeledCheckbox(_whiteTex, new Vector2(100, 100), "Fullscreen", Game.Instance.WindowState == WindowState.Fullscreen);
         var size = Game.Instance.Size;
         _selectedRes = Array.FindIndex(_resolutions, r => r == size);
         if (_selectedRes < 0) _selectedRes = 0;
@@ -53,8 +52,7 @@ public class SettingsScene : Scene
         ContentManager.UnloadTexture("Textures/back.png");
         ContentManager.UnloadTexture("Textures/save.png");
         ContentManager.UnloadTexture("Textures/white.png");
-        ContentManager.UnloadTexture("Textures/fullscreen_on.png");
-        ContentManager.UnloadTexture("Textures/fullscreen_off.png");
+        _fullscreenCheck.Dispose();
         for (int i = 0; i < _resolutions.Length; i++)
             ContentManager.UnloadTexture($"Textures/res/{_resolutions[i].X}x{_resolutions[i].Y}.png");
     }
@@ -72,13 +70,8 @@ public class SettingsScene : Scene
         }
 
         // fullscreen toggle
-        var fsPos = new Vector2(100, 100);
-        var fsSize = new Vector2(160, 32);
-        if (IsClicked(mouse, fsPos, fsSize))
-        {
-            _fullscreen = !_fullscreen;
+        if (_fullscreenCheck.Update(mouse))
             _pending = true;
-        }
 
         // resolution cycle
         var resPos = new Vector2(100, 160);
@@ -110,7 +103,7 @@ public class SettingsScene : Scene
 
     private void ApplySettings()
     {
-        Game.Instance.WindowState = _fullscreen ? WindowState.Fullscreen : WindowState.Normal;
+        Game.Instance.WindowState = _fullscreenCheck.Checked ? WindowState.Fullscreen : WindowState.Normal;
         var res = _resolutions[_selectedRes];
         Game.Instance.Size = res;
         Game.Camera.Resize(res.X, res.Y);
@@ -124,9 +117,7 @@ public class SettingsScene : Scene
         // back button
         sb.Draw(_backTex, new Vector2(10, 10), new Vector2(64, 32));
 
-        // fullscreen option
-        var fsTex = _fullscreen ? _fullscreenOnTex : _fullscreenOffTex;
-        sb.Draw(fsTex, new Vector2(100, 100), new Vector2(160, 32));
+        _fullscreenCheck.Draw(sb);
 
         // resolution option
         sb.Draw(_resolutionTex[_selectedRes], new Vector2(100, 160), new Vector2(120, 32));

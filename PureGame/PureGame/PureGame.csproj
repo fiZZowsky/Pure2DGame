@@ -11,10 +11,13 @@
     <None Remove="Engine\Content\player.png" />
     <None Remove="Engine\Content\Textures\back.png" />
     <None Remove="Engine\Content\Textures\exit.png" />
+    <None Remove="Engine\Content\Textures\load_game.png" />
+    <None Remove="Engine\Content\Textures\main_menu_background.png" />
     <None Remove="Engine\Content\Textures\new_game.png" />
     <None Remove="Engine\Content\Textures\player.png" />
     <None Remove="Engine\Content\Textures\save.png" />
     <None Remove="Engine\Content\Textures\settings.png" />
+    <None Remove="Engine\Content\Textures\white.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +25,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\Content\Textures\exit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engine\Content\Textures\load_game.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engine\Content\Textures\main_menu_background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\Content\Textures\player.png">
@@ -36,6 +45,9 @@
     <Content Include="Engine\Content\Textures\new_game.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Engine\Content\Textures\white.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -43,7 +55,9 @@
     <PackageReference Include="OpenTK" Version="4.9.4" />
     <PackageReference Include="OpenTK.Graphics" Version="4.9.4" />
     <PackageReference Include="OpenTK.Windowing.Desktop" Version="4.9.4" />
+    <PackageReference Include="SixLabors.Fonts" Version="2.1.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
   </ItemGroup>
 
   <ItemGroup>

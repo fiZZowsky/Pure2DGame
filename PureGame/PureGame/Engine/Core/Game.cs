@@ -62,7 +62,6 @@ public class Game : GameWindow
 
         while (_accumulator >= FixedDelta)
         {
-            // TODO: SceneManager.FixedUpdate(FixedDelta);
             _accumulator -= FixedDelta;
         }
         
@@ -84,7 +83,6 @@ public class Game : GameWindow
     protected override void OnUnload()
     {
         base.OnUnload();
-        ContentManager.UnloadTexture("Textures/player.png");
         _spriteBatch?.Dispose();
         Engine.Audio.AudioManager.Dispose();
     }
